@@ -1,0 +1,5 @@
+# IDE & User-specific stuff
+.idea/
+
+# CMake
+cmake-build-*/
