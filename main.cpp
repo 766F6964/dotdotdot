@@ -1,6 +1,8 @@
 #include <iostream>
+#include <math.h>
 #include "engine/block.h"
 #include "engine/utils.h"
+#include "engine/grid.h"
 
 // References & Resources:
 //
@@ -19,9 +21,19 @@ int main() {
     b.set(0, 2);
     b.set(1, 3);
 
-    char chars[5];
-    utils::int_to_uchar(b.to_unicode_char(), chars);
-    std::cout << chars << std::endl;
+    grid g(75, 6);
+
+    std::cout << "Width: " << g.get_width() << std::endl;
+    std::cout << "Height: " << g.get_height() << std::endl;
+
+    for (int x = 0; x <= g.get_width() * 8; x++) {
+        g.set(x / 10, (int) round(10 + cos(x * M_PI / 180) * 10));
+    }
+    g.render();
+
+    //char chars[5];
+    //utils::int_to_uchar(b.to_unicode_char(), chars);
+    //std::cout << chars << std::endl;
 
     return 0;
 }

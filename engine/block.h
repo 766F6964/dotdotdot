@@ -19,13 +19,14 @@ public:
 
     bool is_set(int x, int y);
 
+    void modify(int x, int y, bool value);
+
     void reset();
 
     int to_unicode_char();
 
 private:
 
-    void modify(int x, int y, bool value);
 
     const int BRAILLE_OFFSET = 0x2800;
     const int TRANSFORMATION_MATRIX[8] = {0x01, 0x08, 0x02, 0x10, 0x04, 0x20, 0x40, 0x80};
