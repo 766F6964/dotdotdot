@@ -3,4 +3,4 @@ project(Dots)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(Dots main.cpp engine/grid.cpp engine/grid.h engine/block.cpp engine/block.h engine/utils.cpp engine/utils.h)
+add_executable(Dots main.cpp engine/grid.cpp engine/grid.h engine/block.cpp engine/block.h engine/utils.cpp engine/utils.h engine/geometry/line.cpp engine/geometry/line.h engine/geometry/triangle.cpp engine/geometry/triangle.h)

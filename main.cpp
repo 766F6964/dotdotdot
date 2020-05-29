@@ -1,8 +1,7 @@
-#include <iostream>
-#include <math.h>
-#include "engine/block.h"
-#include "engine/utils.h"
+#include <algorithm>
 #include "engine/grid.h"
+#include "engine/geometry/line.h"
+#include "engine/geometry/triangle.h"
 
 // References & Resources:
 //
@@ -12,28 +11,22 @@
 // http://ioccc.org/2012/endoh1/hint.html
 // https://github.com/null93/drawille
 
-// https://stackoverflow.com/questions/23461499/decimal-to-unicode-char-in-c
-
 int main() {
-    block b;
-    b.set(0, 0);
-    b.set(1, 1);
-    b.set(0, 2);
-    b.set(1, 3);
 
-    grid g(75, 6);
+    const int GRID_WIDTH = 80;
+    const int GRID_HEIGHT = 35;
 
-    std::cout << "Width: " << g.get_width() << std::endl;
-    std::cout << "Height: " << g.get_height() << std::endl;
+    grid g(GRID_WIDTH, GRID_HEIGHT);
 
-    for (int x = 0; x <= g.get_width() * 8; x++) {
-        g.set(x / 10, (int) round(10 + cos(x * M_PI / 180) * 10));
+    auto triangle = triangle::get_triangle(20, 5, 140, 60, 80, 100);
+
+    for (int i = 0; i < g.get_width(); i++) {
+        for (int j = 0; j < g.get_height(); ++j) {
+            if (std::find(triangle.begin(), triangle.end(), std::make_pair(i, j)) != triangle.end()) {
+                g.set(i, j);
+            }
+        }
     }
     g.render();
-
-    //char chars[5];
-    //utils::int_to_uchar(b.to_unicode_char(), chars);
-    //std::cout << chars << std::endl;
-
     return 0;
 }

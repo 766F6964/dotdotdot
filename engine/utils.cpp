@@ -4,6 +4,7 @@
 
 #include "utils.h"
 
+// https://stackoverflow.com/questions/23461499/decimal-to-unicode-char-in-c
 void utils::int_to_uchar(unsigned int code, char *chars) {
     if (code <= 0x7F) {
         chars[0] = (code & 0x7F);
