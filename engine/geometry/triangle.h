@@ -7,12 +7,12 @@
 
 
 #include <vector>
+#include "point.h"
 
 class triangle {
 public:
     static std::vector<std::pair<int, int>> get_triangle(int x1, int y1, int x2, int y2, int x3, int y3);
 private:
-
 };
 
 
