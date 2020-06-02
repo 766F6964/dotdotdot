@@ -16,23 +16,22 @@ canvas::canvas(int width, int height) {
     if (height % 4 != 0)
         throw std::invalid_argument("Height must be a multiple of 4");
 
+    generate_lookup_table();
     buffer.resize(this->grid_width / this->group_width * this->grid_height / this->group_height, 0);
 }
 
 void canvas::render() {
-    std::cout << buffer[0] << std::endl;
     for (int i = 0; i < get_buffer_size(); ++i) {
+        char uc[5];
+        int braille = lookup_table[buffer[i]];
+        utils::int_to_uchar(braille, uc);
 
-        transform(buffer[i], i);
-
-        /*char cell[5];
-        utils::int_to_uchar(buffer[i], cell);
-
-        std::cout << cell;
-
-        if (i % grid_width == 0)
-            std::cout << std::endl;*/
+        if (i % (grid_width / group_width) == 0 && i != 0) {
+            std::cout << std::endl;
+        }
+        std::cout << uc;
     }
+    std::cout << std::endl;
 }
 
 void canvas::set_pixel(int x, int y) {
@@ -44,6 +43,7 @@ void canvas::unset_pixel(int x, int y) {
 }
 
 void canvas::modify_pixel(int x, int y, int value) {
+    validate_coordinates(x, y);
     int bytes_per_line = grid_width / group_width;
     int byte_idx = (x / group_width) + (y / group_height) * bytes_per_line;
     int bit_idx = (x % group_width) * group_height + (y % group_height);
@@ -58,15 +58,48 @@ bool canvas::get_pixel(int x, int y) {
     return (buffer[byte_idx] & (1 << bit_idx)) != 0;
 }
 
+
+void canvas::generate_lookup_table() {
+    int transformation_matrix[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
+
+    for (int i = 0; i < 256; ++i) {
+        int unicode = 0x2800;
+        for (int j = 0; j < 8; ++j) {
+            if (((i & (1 << j)) != 0))
+                unicode += transformation_matrix[j];
+        }
+        this->lookup_table[i] = unicode;
+    }
+}
+
 int canvas::get_buffer_size() {
     return this->buffer.size();
 }
 
-/// Applies braille transformation matrix to a cell value
-void canvas::transform(int value, int byte_index) {
+void canvas::clear() {
+    for (int i = 0; i < get_buffer_size(); ++i) {
+        buffer[i] = 0x00;
+    }
+}
 
-    // Transform value into braille orientation
+void canvas::fill() {
+    for (int i = 0; i < get_buffer_size(); ++i) {
+        buffer[i] = 0xFF;
+    }
+}
 
+void canvas::validate_coordinates(int x, int y) const {
+    if (x >= grid_width || y >= grid_height || x < 0 || y < 0) {
+        throw std::out_of_range("Coordinates do not describe a valid position in this grid");
+    }
+}
+
+int canvas::get_width() {
+    return grid_width;
+}
+
+int canvas::get_height() {
+    return grid_height;
 }
 
 

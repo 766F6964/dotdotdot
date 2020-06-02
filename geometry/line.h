@@ -4,7 +4,8 @@
 
 #ifndef DOTS_LINE_H
 #define DOTS_LINE_H
-#include "../rendering/grid.h"
+
+#include <vector>
 
 class line {
 public:
