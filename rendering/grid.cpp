@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <iostream>
 #include "grid.h"
-#include "utils.h"
 
 grid::grid(int width, int height) {
     this->grid_width = width;
@@ -24,7 +23,7 @@ void grid::render() {
     for (int i = 0; i < get_buffer_size(); ++i) {
         char uc[5];
         int braille = lookup_table[buffer[i]];
-        utils::int_to_uchar(braille, uc);
+        int_to_unicode_char(braille, uc);
 
         if (i % (grid_width / group_width) == 0 && i != 0) {
             std::cout << std::endl;
@@ -50,7 +49,7 @@ void grid::modify_pixel(int x, int y, int value) {
     buffer[byte_idx] = (buffer[byte_idx] & ~(1 << bit_idx)) | (value << bit_idx);
 }
 
-bool grid::get_pixel(int x, int y) {
+bool grid::is_set(int x, int y) {
     int bytes_per_line = grid_width / group_width;
     int byte_idx = (x / group_width) + (y / group_height) * bytes_per_line;
     int bit_idx = (x % group_width) * group_height + (y % group_height);
@@ -60,13 +59,11 @@ bool grid::get_pixel(int x, int y) {
 
 
 void grid::generate_lookup_table() {
-    int transformation_matrix[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
-
     for (int i = 0; i < 256; ++i) {
-        int unicode = 0x2800;
+        int unicode = BRAILLE_OFFSET;
         for (int j = 0; j < 8; ++j) {
             if (((i & (1 << j)) != 0))
-                unicode += transformation_matrix[j];
+                unicode += TRANSFORMATION_MATRIX[j];
         }
         this->lookup_table[i] = unicode;
     }
@@ -100,4 +97,42 @@ int grid::get_width() const {
 
 int grid::get_height() const {
     return grid_height;
+}
+
+// https://stackoverflow.com/questions/23461499/decimal-to-unicode-char-in-c
+void grid::int_to_unicode_char(unsigned int code, char *chars) {
+    if (code <= 0x7F) {
+        chars[0] = (code & 0x7F);
+        chars[1] = '\0';
+    } else if (code <= 0x7FF) {
+        // one continuation byte
+        chars[1] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[0] = 0xC0 | (code & 0x1F);
+        chars[2] = '\0';
+    } else if (code <= 0xFFFF) {
+        // two continuation bytes
+        chars[2] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[1] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[0] = 0xE0 | (code & 0xF);
+        chars[3] = '\0';
+    } else if (code <= 0x10FFFF) {
+        // three continuation bytes
+        chars[3] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[2] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[1] = 0x80 | (code & 0x3F);
+        code = (code >> 6);
+        chars[0] = 0xF0 | (code & 0x7);
+        chars[4] = '\0';
+    } else {
+        // unicode replacement character
+        chars[2] = 0xEF;
+        chars[1] = 0xBF;
+        chars[0] = 0xBD;
+        chars[3] = '\0';
+    }
 }

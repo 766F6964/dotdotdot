@@ -1,5 +1,6 @@
 #include "rendering/grid.h"
-#include "geometry/line.h"
+#include "rendering/geometry/line.h"
+#include "rendering/geometry/triangle.h"
 
 // References & Resources:
 //
@@ -37,6 +38,17 @@ int main() {
     for (auto &line_dot : line::get_line(0, GRID_HEIGHT - 1, GRID_WIDTH - 1, 0)) {
         gr.set_pixel(line_dot.first, line_dot.second);
     }
+
+    // Draw triangle
+    for (auto &line_dot : triangle::get_triangle(GRID_WIDTH / 2, 10, GRID_WIDTH - 13,
+                                                 GRID_HEIGHT - 10, 13, GRID_HEIGHT - 10)) {
+        gr.set_pixel(line_dot.first, line_dot.second);
+    }
+    for (auto &line_dot : triangle::get_triangle(GRID_WIDTH / 2, GRID_HEIGHT - 10, GRID_WIDTH - 13,
+                                                 10, 13, 10)) {
+        gr.set_pixel(line_dot.first, line_dot.second);
+    }
+
     // Render output
     gr.render();
 
