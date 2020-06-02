@@ -2,16 +2,16 @@
 // Created by void on 5/31/20.
 //
 
-#ifndef DOTS_CANVAS_H
-#define DOTS_CANVAS_H
+#ifndef DOTS_GRID_H
+#define DOTS_GRID_H
 
 
 #include <vector>
 
-class canvas {
+class grid {
 public:
 
-    canvas(int width, int height);
+    grid(int width, int height);
 
     void clear();
 
@@ -23,8 +23,8 @@ public:
 
     bool get_pixel(int x, int y);
 
-    int get_width();
-    int get_height();
+    int get_width() const;
+    int get_height() const;
 
     int get_buffer_size();
 
@@ -57,4 +57,4 @@ private:
 };
 
 
-#endif //DOTS_CANVAS_H
+#endif //DOTS_GRID_H

@@ -1,4 +1,5 @@
-#include "rendering/canvas.h"
+#include "rendering/grid.h"
+#include "geometry/line.h"
 
 // References & Resources:
 //
@@ -14,25 +15,30 @@
 
 int main() {
 
-    int width = 120;
-    int height = 80;
-    canvas c(120, 80); // 6 chars in je 2 lines
+    const int GRID_WIDTH = 120;
+    const int GRID_HEIGHT = 80;
+
+    grid gr(GRID_WIDTH, GRID_HEIGHT);
 
     // Create border
-    for (int i = 0; i < width; ++i) {
-        c.set_pixel(i, 0);
-        c.set_pixel(i, height - 1);
+    for (int i = 0; i < GRID_WIDTH; ++i) {
+        gr.set_pixel(i, 0);
+        gr.set_pixel(i, GRID_HEIGHT - 1);
     }
-    for (int i = 0; i < height; ++i) {
-        c.set_pixel(0, i);
-        c.set_pixel(width - 1, i);
+    for (int i = 0; i < GRID_HEIGHT; ++i) {
+        gr.set_pixel(0, i);
+        gr.set_pixel(GRID_WIDTH - 1, i);
     }
 
-    c.render();
-    c.clear();
-    c.render();
-    c.fill();
-    c.render();
+    // Draw lines
+    for (auto &line_dot : line::get_line(0, 0, GRID_WIDTH, GRID_HEIGHT)) {
+        gr.set_pixel(line_dot.first, line_dot.second);
+    }
+    for (auto &line_dot : line::get_line(0, GRID_HEIGHT - 1, GRID_WIDTH - 1, 0)) {
+        gr.set_pixel(line_dot.first, line_dot.second);
+    }
+    // Render output
+    gr.render();
 
     return 0;
 }
