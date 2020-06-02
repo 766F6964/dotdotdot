@@ -2,14 +2,14 @@
 // Created by void on 5/27/20.
 //
 
-#ifndef DOTS_BLOCK_H
-#define DOTS_BLOCK_H
+#ifndef DOTS_CELL_H
+#define DOTS_CELL_H
 
 
-class block {
+class cell {
 public:
 
-    block();
+    cell();
 
     void check_bounds(int x, int y);
 
@@ -35,4 +35,4 @@ private:
 };
 
 
-#endif //DOTS_BLOCK_H
+#endif //DOTS_CELL_H

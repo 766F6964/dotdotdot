@@ -4,8 +4,8 @@
 
 #include <algorithm>
 #include "examples.h"
-#include "../engine/geometry/triangle.h"
-#include "../engine/geometry/line.h"
+#include "../geometry/triangle.h"
+#include "../geometry/line.h"
 
 
 void examples::draw_triangle() {

@@ -5,7 +5,7 @@
 #ifndef DOTS_EXAMPLES_H
 #define DOTS_EXAMPLES_H
 
-#include "../engine/grid.h"
+#include "../rendering/grid.h"
 
 class examples {
 public:

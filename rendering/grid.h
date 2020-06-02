@@ -6,7 +6,7 @@
 #define DOTS_GRID_H
 
 #include <vector>
-#include "block.h"
+#include "cell.h"
 
 class grid {
 public:
@@ -34,7 +34,7 @@ private:
     int width;
     int height;
 
-    std::vector<block*> screen;
+    std::vector<cell*> screen;
 
 };
 

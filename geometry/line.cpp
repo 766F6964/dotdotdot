@@ -6,6 +6,8 @@
 
 std::vector<std::pair<int, int>> line::get_line(int x1, int y1, int x2, int y2) {
 
+    // Todo: Improve this crappy implementation a bit.
+
     int x_diff = std::max(x1, x2) - std::min(x1, x2);
     int y_diff = std::max(y1, y2) - std::min(y1, y2);
     int x_direction = x1 <= x2 ? 1 : -1;

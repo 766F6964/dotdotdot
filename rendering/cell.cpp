@@ -3,37 +3,37 @@
 //
 
 #include <stdexcept>
-#include "block.h"
+#include "cell.h"
 
-block::block() {
+cell::cell() {
     reset();
 }
 
-void block::check_bounds(int x, int y) {
+void cell::check_bounds(int x, int y) {
     if (x < 0 || y < 0 || x > 1 || y > 3) {
-        throw std::out_of_range("Coordinates do not describe a valid position in this block");
+        throw std::out_of_range("Coordinates do not describe a valid position in this cell");
     }
 }
 
-void block::set(int x, int y) {
+void cell::set(int x, int y) {
     modify(x, y, true);
 }
 
-void block::unset(int x, int y) {
+void cell::unset(int x, int y) {
     modify(x, y, false);
 }
 
-bool block::is_set(int x, int y) {
+bool cell::is_set(int x, int y) {
     check_bounds(x, y);
-    return block_map [ y * 2 + x ];
+    return block_map[y * 2 + x];
 }
 
-void block::modify(int x, int y, bool value) {
+void cell::modify(int x, int y, bool value) {
     check_bounds(x, y);
     block_map[y * 2 + x] = value;
 }
 
-int block::to_unicode_char() {
+int cell::to_unicode_char() {
     int unicode_id = BRAILLE_OFFSET;
     for (int i = 0; i < 8; i++) {
         if (block_map[i]) {
@@ -43,6 +43,6 @@ int block::to_unicode_char() {
     return unicode_id;
 }
 
-void block::reset() {
+void cell::reset() {
     std::fill(block_map, block_map + 8, 0);
 }

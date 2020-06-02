@@ -14,7 +14,7 @@ grid::grid(int width, int height) {
     screen.resize(width * height);
 
     for (int i = 0; i < this->width * this->height; ++i) {
-        screen[i] = new block();
+        screen[i] = new cell();
     }
 }
 
@@ -52,7 +52,7 @@ void grid::unset(int x, int y) {
 
 void grid::modify(int x, int y, bool value) {
     check_bounds(x, y);
-    block *b = screen[((y / 4) * width) + (x / 2)];
+    cell *b = screen[((y / 4) * width) + (x / 2)];
     b->modify(x % 2, y % 4, value);
 }
 
