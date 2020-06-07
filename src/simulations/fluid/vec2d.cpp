@@ -16,19 +16,19 @@ vec2d::vec2d(float x, float y) {
 }
 
 vec2d vec2d::operator+(const vec2d &v) const {
-    return vec2d(x + v.x, y + v.y);
+    return {x + v.x, y + v.y};
 }
 
 vec2d vec2d::operator/(const vec2d &v) const {
-    return vec2d(x / v.x, y / v.y);
+    return {x / v.x, y / v.y};
 }
 
 vec2d vec2d::operator*(const vec2d &v) const {
-    return vec2d(x * v.x, y * v.y);
+    return {x * v.x, y * v.y};
 }
 
 vec2d vec2d::operator-(const vec2d &v) const {
-    return vec2d(x - v.x, y - v.y);
+    return {x - v.x, y - v.y};
 }
 
 bool vec2d::operator==(const vec2d &v) const {
@@ -54,9 +54,9 @@ bool vec2d::operator<=(const vec2d &v) const {
 }
 
 vec2d vec2d::operator*(const float &scalar) const {
-    return vec2d(x * scalar, y * scalar);
+    return {x * scalar, y * scalar};
 }
 
 vec2d vec2d::operator/(const float &scalar) const {
-    return vec2d(x / scalar, y / scalar);
+    return {x / scalar, y / scalar};
 }
