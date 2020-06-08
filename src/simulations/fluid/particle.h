@@ -9,11 +9,21 @@
 // https://www.youtube.com/watch?v=NJBz8rMJ0ZU
 
 
+#include "vec2d.h"
+
+// https://www.lucasschuermann.com/writing/implementing-sph-in-2d
+
 class particle {
 public:
 
-    float pressure;
-    float density;
+    particle(int x, int y);
+
+    vec2d position;
+    vec2d velocity;
+    vec2d force;
+
+    float pressure{};
+    float density{};
 
 private:
 

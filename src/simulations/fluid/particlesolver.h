@@ -16,8 +16,13 @@
 //computeGravityForce();
 //step(dt);
 
+#include <vector>
+#include "particle.h"
+
 class particlesolver {
 public:
+
+    void initSPH();
 
     void integrate();
 
@@ -34,6 +39,9 @@ public:
     void update();
 
 private:
+
+    std::vector<particle> particles;
+
 };
 
 

@@ -31,3 +31,11 @@ void particlesolver::compute_gravity_force() {
 void particlesolver::update() {
 
 }
+
+void particlesolver::initSPH() {
+/*    for (int i = 0; i <; ++i) {
+        for (int j = 0; j <; ++j) {
+
+        }
+    }*/
+}
