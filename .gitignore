@@ -1,5 +1,8 @@
-# IDE & User-specific stuff
-.idea/
+# Blacklist everything
+*/**
 
-# CMake
-cmake-build-*/
+# Whitelist the following
+!Makefile
+!.gitignore
+!*.md
+!*.c
