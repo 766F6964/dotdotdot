@@ -6,3 +6,4 @@
 !.gitignore
 !*.md
 !*.c
+!*.h
