@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+#include <time.h>
 #include "grid.h"
 #include "unicode.h"
 
@@ -10,7 +11,6 @@ const int group_width = 2;
 const int braille_offset = 0x2800;
 const int TRANSFORMATION_MATRIX[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
 wchar_t lookup_table[256] = {};
-
 
 grid *grid_new(int grid_width, int grid_height)
 {
@@ -25,7 +25,7 @@ grid *grid_new(int grid_width, int grid_height)
     p_grid->height = grid_height;
     p_grid->buffer_size = grid_width / group_width * grid_height / group_height;
     p_grid->buffer = calloc(p_grid->buffer_size, sizeof(int));
-    
+
     return p_grid;
 }
 
@@ -84,6 +84,21 @@ void grid_render(grid *g)
     printf("\n");
 }
 
+void grid_render_loop(grid *g)
+{
+    int fps_cap = 30;
+    
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
+    grid_render(g);
+    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
+
+    unsigned long delta = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
+ 
+    printf("Rendertime: %dµs\n", delta);
+}
+
 void grid_modify_pixel(grid *g, int x, int y, int value)
 {
     // ToDo validate coords
@@ -103,7 +118,8 @@ void grid_unset_pixel(grid *g, int x, int y)
     grid_modify_pixel(g, x, y, 0);
 }
 
-void grid_draw_line(grid *g, int x1, int y1, int x2, int y2){
+void grid_draw_line(grid *g, int x1, int y1, int x2, int y2)
+{
     // Bresenham's line algorithm
     int x_diff = x1 > x2 ? x1 - x2 : x2 - x1;
     int y_diff = y1 > y2 ? y1 - y2 : y2 - y1;
@@ -113,17 +129,31 @@ void grid_draw_line(grid *g, int x1, int y1, int x2, int y2){
     int err = (x_diff > y_diff ? x_diff : -y_diff) / 2;
     int err2;
 
-    while(1) {
+    while (1)
+    {
         grid_set_pixel(g, x1, y1);
-        if (x1 == x2 && y1 == y2) { break; }
+        if (x1 == x2 && y1 == y2)
+        {
+            break;
+        }
         int err2 = err;
-        if (err2 > -x_diff) { err -= y_diff; x1 += x_direction; }
-        if (err2 < y_diff) { err += x_diff; y1 += y_direction; }
+        if (err2 > -x_diff)
+        {
+            err -= y_diff;
+            x1 += x_direction;
+        }
+        if (err2 < y_diff)
+        {
+            err += x_diff;
+            y1 += y_direction;
+        }
     }
 }
 
-void grid_draw_triangle(grid *g, int x1, int y1, int x2, int y2, int x3, int y3){
-    grid_draw_line (g, x1, y1, x2, y2);
-    grid_draw_line (g, x2, y2, x3, y3);
-    grid_draw_line (g, x3, y3, x1, y1);
+void grid_draw_triangle(grid *g, int x1, int y1, int x2, int y2, int x3, int y3)
+{
+    // ToDo: Add filling algorithm
+    grid_draw_line(g, x1, y1, x2, y2);
+    grid_draw_line(g, x2, y2, x3, y3);
+    grid_draw_line(g, x3, y3, x1, y1);
 }
