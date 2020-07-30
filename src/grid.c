@@ -5,12 +5,12 @@
 #include "grid.h"
 #include "unicode.h"
 
-// Variables
 const int group_height = 4;
 const int group_width = 2;
 const int braille_offset = 0x2800;
 const int TRANSFORMATION_MATRIX[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
 wchar_t lookup_table[256] = {};
+
 
 grid *grid_new(int grid_width, int grid_height)
 {
@@ -87,7 +87,7 @@ void grid_render(grid *g)
 void grid_render_loop(grid *g)
 {
     int fps_cap = 30;
-    
+
     struct timespec start, end;
 
     clock_gettime(CLOCK_MONOTONIC_RAW, &start);
@@ -95,7 +95,7 @@ void grid_render_loop(grid *g)
     clock_gettime(CLOCK_MONOTONIC_RAW, &end);
 
     unsigned long delta = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
- 
+
     printf("Rendertime: %dµs\n", delta);
 }
 
