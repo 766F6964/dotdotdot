@@ -121,3 +121,9 @@ void grid_draw_line(grid *g, int x1, int y1, int x2, int y2){
         if (err2 < y_diff) { err += x_diff; y1 += y_direction; }
     }
 }
+
+void grid_draw_triangle(grid *g, int x1, int y1, int x2, int y2, int x3, int y3){
+    grid_draw_line (g, x1, y1, x2, y2);
+    grid_draw_line (g, x2, y2, x3, y3);
+    grid_draw_line (g, x3, y3, x1, y1);
+}
