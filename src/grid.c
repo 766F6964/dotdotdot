@@ -69,7 +69,6 @@ void grid_fill(grid *g)
 
 void grid_render(grid *g)
 {
-
     for (int i = 0; i < g->buffer_size; ++i)
     {
         char uc[5];
@@ -102,4 +101,23 @@ void grid_set_pixel(grid *g, int x, int y)
 void grid_unset_pixel(grid *g, int x, int y)
 {
     grid_modify_pixel(g, x, y, 0);
+}
+
+void grid_draw_line(grid *g, int x1, int y1, int x2, int y2){
+    // Bresenham's line algorithm
+    int x_diff = x1 > x2 ? x1 - x2 : x2 - x1;
+    int y_diff = y1 > y2 ? y1 - y2 : y2 - y1;
+    int x_direction = x1 <= x2 ? 1 : -1;
+    int y_direction = y1 <= y2 ? 1 : -1;
+
+    int err = (x_diff > y_diff ? x_diff : -y_diff) / 2;
+    int err2;
+
+    while(1) {
+        grid_set_pixel(g, x1, y1);
+        if (x1 == x2 && y1 == y2) { break; }
+        int err2 = err;
+        if (err2 > -x_diff) { err -= y_diff; x1 += x_direction; }
+        if (err2 < y_diff) { err += x_diff; y1 += y_direction; }
+    }
 }
