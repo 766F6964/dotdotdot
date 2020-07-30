@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-const int group_height = 2;
-const int group_width = 4;
+const int group_height = 4;
+const int group_width = 2;
 const int braille_offset = 0x2800;
 const int TRANSFORMATION_MATRIX[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
 wchar_t lookup_table[256] = {};
