@@ -12,6 +12,7 @@ typedef struct
 {
     int width;
     int height;
+    int buffer_size;
     int *buffer;
 } grid;
 
@@ -42,8 +43,9 @@ grid *grid_new(int grid_width, int grid_height)
 
     p_grid->width = grid_width;
     p_grid->height = grid_height;
-
-    p_grid->buffer = calloc(grid_width / group_width * grid_height / group_height, sizeof(int));
+    p_grid->buffer_size = grid_width / group_width * grid_height / group_height;
+    p_grid->buffer = calloc(p_grid->buffer_size, sizeof(int));
+    
     return p_grid;
 }
 
@@ -120,7 +122,7 @@ void int_to_unicode_char(unsigned int code, char *chars)
 
 void grid_clear(grid *g)
 {
-    for (int i = 0; i < g->width * g->height; ++i)
+    for (int i = 0; i < g->buffer_size; ++i)
     {
         g->buffer[i] = 0x00;
     }
@@ -128,7 +130,7 @@ void grid_clear(grid *g)
 
 void grid_fill(grid *g)
 {
-    for (int i = 0; i < g->width * g->height; ++i)
+    for (int i = 0; i < g->buffer_size; ++i)
     {
         g->buffer[i] = 0xFF;
     }
@@ -138,7 +140,7 @@ void grid_fill(grid *g)
 void grid_render(grid *g)
 {
 
-    for (int i = 0; i < (g->width * g->height); ++i)
+    for (int i = 0; i < g->buffer_size; ++i)
     {
         char uc[5];
         int braille = lookup_table[g->buffer[i]];
@@ -192,13 +194,10 @@ int main()
     grid_set_pixel(g, 9,9);
     grid_set_pixel(g, 10,10);
     grid_set_pixel(g, 11,11);
-
-    // Print buffer content
-    for (int i = 0; i < g->width * g->height; i++)
-    {
-        printf("#%i -> %i\n", i, *&g->buffer[i]);
-    }
-
+    grid_render(g);
+    grid_fill(g);
+    grid_render(g);
+    grid_clear(g);
     grid_render(g);
     grid_free(g);
 
