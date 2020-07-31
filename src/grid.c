@@ -1,3 +1,5 @@
+#define _POSIX_C_SOURCE 199309L
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -86,7 +88,7 @@ void grid_render(grid *g)
 
 void grid_render_loop(grid *g)
 {
-    int fps_cap = 30;
+    //int fps_cap = 30;
 
     struct timespec start, end;
 
@@ -96,7 +98,7 @@ void grid_render_loop(grid *g)
 
     unsigned long delta = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
 
-    printf("Rendertime: %dµs\n", delta);
+    printf("Rendertime: %lu µs\n", delta);
 }
 
 void grid_modify_pixel(grid *g, int x, int y, int value)
@@ -127,8 +129,7 @@ void grid_draw_line(grid *g, int x1, int y1, int x2, int y2)
     int y_direction = y1 <= y2 ? 1 : -1;
 
     int err = (x_diff > y_diff ? x_diff : -y_diff) / 2;
-    int err2;
-
+    
     while (1)
     {
         grid_set_pixel(g, x1, y1);

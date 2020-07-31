@@ -1,6 +1,8 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "grid.h"
+
 typedef struct {
     // Maybe include something to measure frame pacing?
     grid* grid;
