@@ -1,15 +1,3 @@
-//#include "grid.h"
-#include "unicode.h"
-#include "renderer.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-render_context* p_render_context;
-const int braille_offset = 0x2800;
-const int TRANSFORMATION_MATRIX[8] ={ 0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80 };
-wchar_t lookup_table[256] ={};
-
 // Explanation of rendering process:
 //
 // 1) Render is initialized with grid ptr
@@ -19,71 +7,63 @@ wchar_t lookup_table[256] ={};
 // 3.2) If grid_cached == null -> render grid normally and then set cached grid to the grid that was just rendered
 // 4) After rendering increase frame rendered counter
 
+#include "grid.h"
+#include "unicode.h"
+#include "renderer.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "constants.h"
+
+render_context* p_render_context;
+const int braille_offset = 0x2800;
+const int TRANSFORMATION_MATRIX[8] ={ 0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80 };
+wchar_t lookup_table[256] ={};
+
 
 void renderer_new(grid *p_grid) {
+
+    // Generate braille lookup table
     grid_generate_lookup_table();
 
     // Copy initial grid, to cache it
     grid *p_cached_grid = calloc(1, sizeof(*p_grid));
-    memcpy (p_cached_grid, p_grid, sizeof (*p_cached_grid));
+    memcpy(p_cached_grid, p_grid, sizeof(*p_cached_grid));
 
     // Store cached grid in render_context
     p_render_context = calloc(1, sizeof(*p_render_context));
     p_render_context->p_cached_grid = p_cached_grid;
     p_render_context->frames_rendered = 0;
+
 }
 
 void renderer_update(grid* p_grid)
 {
-    // Compare new grid and previous grid and update accordingly
-    // Only re-render the changes from old to new grid
+    // ToDo: Only render the characters that changed from current grid to cached grid
+    // ToDo: Get character coordinates from grid coordinates
 
-    //grid* p_grid_old = p_render_info->grid;
-    
-    /* if (p_frame == NULL || p_frame->frames_rendered == 0) {
-        // Its the first frame we render, so we have to render the whole grid.
+    printf("Rendering frame %i\n", p_render_context->frames_rendered);
 
-        printf("[Renderer] - Rendering initial grid frame");
-     
-        for (int i = 0; i < p_grid->buffer_size; ++i)
-        {
-            char uc[5];
-            int braille = lookup_table[p_frame->grid->buffer[i]];
-            int_to_unicode_char(braille, uc);
-
-            if (i % (p_frame->grid->width / group_width) == 0 && i != 0)
-            {
-                printf("\n");
-            }
-            printf(uc);
-        }
-        printf("\n");
-       
-    } */
-    // ToDo: Calculate cursor position for printed characters that need to be updated
-
-    /*
     for (int i = 0; i < p_grid->buffer_size; ++i)
     {
         char uc[5];
         int braille = lookup_table[p_grid->buffer[i]];
         int_to_unicode_char(braille, uc);
 
-        if (i % (g->width / group_width) == 0 && i != 0)
+        if (i % (p_grid->width / group_width) == 0 && i != 0)
         {
             printf("\n");
         }
         printf(uc);
     }
     printf("\n");
-    */
 
-    //return NULL; // ToDo: Return actual frame
+    // ToDo: Update p_cached_grid
+    p_render_context->frames_rendered++;
 }
 
 void renderer_free()
 {
-    // Maybe we should free if we need to reuse the grid buffer?
     free(p_render_context->p_cached_grid);
     free(p_render_context);
 }

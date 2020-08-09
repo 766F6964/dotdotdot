@@ -3,13 +3,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
-
 #include <time.h>
+
 #include "grid.h"
 #include "unicode.h"
+#include "constants.h"
 
-const int group_height = 4;
-const int group_width = 2;
 
 grid *grid_new(int grid_width, int grid_height)
 {

@@ -6,20 +6,28 @@ int main()
 {
     // Create initial grid
     grid* g = grid_new(12, 12);
-    grid_set_pixel(g, 0, 0);
+
+    // Set some pixels
+    for (int i = 0; i < 12; i++)
+    {
+        grid_set_pixel(g, i, i);
+    }
 
     // Create new renderer
     renderer_new(g);
-    renderer_update(g);
+
+    while (1) {
+        renderer_update(g);
+    }
 
     //printf("Rendered frame %i", f->frames_rendered);
-    
+
     renderer_free();
 
     //printf("Buffersize: %i\n", g->bu<ffer_size);
 
     /*
-    
+
 
     // Maybe something like renderer_set_opts() ?
 
@@ -40,14 +48,14 @@ int main()
     */
     /*
     grid_clear(g);
-    
-    
+
+
     grid_draw_line(g, 23, 0, 0, 23);
     grid_draw_line(g, 0, 0, 23, 23);
 
     grid_render_loop(g);
     grid_clear(g);
-    
+
 
     grid_draw_triangle(g, 2, 2, 23, 12, 10, 23);
     grid_render_loop(g);

@@ -1,12 +1,8 @@
 #ifndef GRID_H
 #define GRID_H
 
-//#include "grid.h"
-//#include "unicode.h"
-
 typedef struct
 {
-
     int width;
     int height;
     int buffer_size;
