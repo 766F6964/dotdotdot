@@ -1,9 +1,13 @@
 # Blacklist everything
 */**
 
-# Whitelist the following
-!Makefile
+# Whitelist config, build and debug scripts
 !.gitignore
+!.vscode/launch.json
+!.vscode/tasks.json
+!Makefile
+
+# Whitelist the sourceode and docs
 !*.md
 !*.c
 !*.h
