@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stddef.h>
+
 #include <time.h>
 #include "grid.h"
 #include "unicode.h"
@@ -68,7 +69,7 @@ void grid_fill(grid *g)
         g->buffer[i] = 0xFF;
     }
 }
-
+/*
 void grid_render(grid *g)
 {
     for (int i = 0; i < g->buffer_size; ++i)
@@ -100,6 +101,7 @@ void grid_render_loop(grid *g)
 
     printf("Rendertime: %lu µs\n", delta);
 }
+*/
 
 void grid_modify_pixel(grid *g, int x, int y, int value)
 {

@@ -1,5 +1,4 @@
 prog:
-	gcc main.c grid.c unicode.c renderer.c -o dots -Wall -Werror
+	gcc -g -o dots grid.c unicode.c renderer.c main.c -Wall -Werror
 clean:
 	rm dots
-	rm dots.o
