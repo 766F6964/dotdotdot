@@ -1,16 +1,25 @@
 #include <stdio.h>
 #include "grid.h"
-//#include "renderer.h"
+#include "renderer.h"
 
 int main()
 {
-    grid* g = grid_new(24, 24);
-    grid_set_pixel(g, 1, 1);
+    // Create initial grid
+    grid* g = grid_new(12, 12);
+    grid_set_pixel(g, 0, 0);
 
-    printf("Buffersize: %i\n", g->buffer_size);
+    // Create new renderer
+    renderer_new(g);
+    renderer_update(g);
+
+    //printf("Rendered frame %i", f->frames_rendered);
+    
+    renderer_free();
+
+    //printf("Buffersize: %i\n", g->bu<ffer_size);
 
     /*
-    frame *f = renderer_new(g);
+    
 
     // Maybe something like renderer_set_opts() ?
 

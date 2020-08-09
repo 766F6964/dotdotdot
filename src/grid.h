@@ -6,6 +6,7 @@
 
 typedef struct
 {
+
     int width;
     int height;
     int buffer_size;
@@ -14,7 +15,7 @@ typedef struct
 
 grid *grid_new(int grid_width, int grid_height);
 void grid_free(grid *p_grid);
-void grid_generate_lookup_table();
+//void grid_generate_lookup_table();
 void grid_clear(grid *g);
 void grid_fill(grid *g);
 /* void grid_render(grid *g);

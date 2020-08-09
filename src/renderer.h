@@ -4,13 +4,13 @@
 #include "grid.h"
 
 typedef struct {
-    // Maybe include something to measure frame pacing?
-    grid* grid;
+    grid* p_cached_grid;
     int frames_rendered;
-} frame;
+} render_context;
 
-frame* renderer_new(grid* p_grid);
-frame* renderer_update(grid* p_grid); // Maybe grid* instead?
+void renderer_new(grid* p_grid);
+void renderer_update(grid* p_grid); // Maybe grid* instead?
 void renderer_free();
+void grid_generate_lookup_table();
 
 #endif

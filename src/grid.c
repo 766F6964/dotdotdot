@@ -10,18 +10,12 @@
 
 const int group_height = 4;
 const int group_width = 2;
-const int braille_offset = 0x2800;
-const int TRANSFORMATION_MATRIX[8] = {0x01, 0x02, 0x04, 0x40, 0x08, 0x10, 0x20, 0x80};
-wchar_t lookup_table[256] = {};
-
 
 grid *grid_new(int grid_width, int grid_height)
 {
     if ((grid_width % 2 != 0) || (grid_height % 4 != 0))
         return NULL;
-
-    grid_generate_lookup_table();
-
+                                                                                                
     grid *p_grid = calloc(1, sizeof(*p_grid));
 
     p_grid->width = grid_width;
@@ -36,22 +30,6 @@ void grid_free(grid *p_grid)
 {
     free(p_grid->buffer);
     free(p_grid);
-}
-
-void grid_generate_lookup_table()
-{
-    for (int i = 0; i < 256; ++i)
-    {
-        int unicode = braille_offset;
-        for (int j = 0; j < 8; ++j)
-        {
-            if (((i & (1 << j)) != 0))
-            {
-                unicode += TRANSFORMATION_MATRIX[j];
-            }
-        }
-        lookup_table[i] = unicode;
-    }
 }
 
 void grid_clear(grid *g)
