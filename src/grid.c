@@ -14,7 +14,7 @@ grid *grid_new(int grid_width, int grid_height)
 {
     if ((grid_width % 2 != 0) || (grid_height % 4 != 0))
         return NULL;
-                                                                                                
+
     grid *p_grid = calloc(1, sizeof(*p_grid));
 
     p_grid->width = grid_width;
@@ -44,6 +44,15 @@ void grid_fill(grid *g)
     for (int i = 0; i < g->buffer_size; ++i)
     {
         g->buffer[i] = 0xFF;
+    }
+}
+
+void grid_print_buffer(grid *g) {
+
+    for (int i = 0; i < g->buffer_size; i++)
+    {
+        printf("0x%02x%s", g->buffer[i], i == g->buffer_size - 1 ? "\n" : ",");
+
     }
 }
 /*
@@ -108,7 +117,6 @@ void grid_draw_line(grid *g, int x1, int y1, int x2, int y2)
     int y_direction = y1 <= y2 ? 1 : -1;
 
     int err = (x_diff > y_diff ? x_diff : -y_diff) / 2;
-    
     while (1)
     {
         grid_set_pixel(g, x1, y1);

@@ -14,6 +14,7 @@ void grid_free(grid *p_grid);
 //void grid_generate_lookup_table();
 void grid_clear(grid *g);
 void grid_fill(grid *g);
+void grid_print_buffer(grid *g);
 /* void grid_render(grid *g);
 void grid_render_loop(grid *g); */
 void grid_modify_pixel(grid *g, int x, int y, int value);

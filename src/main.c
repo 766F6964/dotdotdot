@@ -7,19 +7,25 @@ int main()
     // Create initial grid
     grid* g = grid_new(12, 12);
 
+
+    grid_print_buffer(g);
+    
     // Set some pixels
     for (int i = 0; i < 12; i++)
     {
         grid_set_pixel(g, i, i);
     }
 
+    grid_print_buffer(g);
+
     // Create new renderer
     renderer_new(g);
 
+    /*
     while (1) {
         renderer_update(g);
     }
-
+    */
     //printf("Rendered frame %i", f->frames_rendered);
 
     renderer_free();
