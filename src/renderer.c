@@ -26,9 +26,12 @@ void renderer_new(grid *p_grid) {
     // Generate braille lookup table
     grid_generate_lookup_table();
 
-    // Copy initial grid, to cache it
+    // Create copy of initial grid for caching, but zero out buffer
     grid *p_cached_grid = calloc(1, sizeof(*p_grid));
-    memcpy(p_cached_grid, p_grid, sizeof(*p_cached_grid));
+    p_cached_grid->width = p_grid->width;
+    p_cached_grid->height = p_grid->height;
+    p_cached_grid->buffer_size = p_grid->buffer_size;
+    p_cached_grid->buffer = calloc(p_grid->buffer_size, sizeof(int));
 
     // Store cached grid in render_context
     p_render_context = calloc(1, sizeof(*p_render_context));
@@ -44,17 +47,19 @@ void renderer_update(grid* p_grid)
 
     printf("Rendering frame %i\n", p_render_context->frames_rendered);
 
-
     grid_print_buffer(p_grid, "Current: ");
     grid_print_buffer(p_render_context->p_cached_grid, "Cached : ");
 
     // Iterate over grid and look for differences to cached_grid
     for (int i = 0; i < p_grid->buffer_size; i++)
     {
-        // ToDo: Write buffers as hex string to console, to see differences.
         // Difference was found, note that this character must be re-rendered
         if (p_grid->buffer[i] != p_render_context->p_cached_grid->buffer[i]) {
-            printf("Change at index %i [%i->%i]. Rerendering.", i, p_render_context->p_cached_grid->buffer[i], p_grid->buffer[i]);
+
+            // Compute row and column index of the character we need to re-render
+            int pos_x = i % (p_render_context->p_cached_grid->width / group_width);
+            int pos_y = i / (p_render_context->p_cached_grid->width / group_width);
+            printf("Change index %i [%i->%i] Rerendering coordinate (%i, %i).\n", i, p_render_context->p_cached_grid->buffer[i], p_grid->buffer[i], pos_x, pos_y);
         }
     }
 
