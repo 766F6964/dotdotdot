@@ -6,66 +6,20 @@ int main()
 {
     // Create initial grid
     grid* g = grid_new(12, 12);
-
-
-    grid_print_buffer(g);
+    renderer_new(g);
     
-    // Set some pixels
+    // Fill grid from left to right (simple animation)
+    renderer_update(g);  
     for (int i = 0; i < 12; i++)
     {
-        grid_set_pixel(g, i, i);
+        for (int j = 0; j < 12; j++)
+        {
+            grid_set_pixel(g, i, j);
+        }
+        renderer_update(g);      
     }
 
-    grid_print_buffer(g);
-
-    // Create new renderer
-    renderer_new(g);
-
-    /*
-    while (1) {
-        renderer_update(g);
-    }
-    */
-    //printf("Rendered frame %i", f->frames_rendered);
-
+    // Free allocations
     renderer_free();
-
-    //printf("Buffersize: %i\n", g->bu<ffer_size);
-
-    /*
-
-
-    // Maybe something like renderer_set_opts() ?
-
-    int cnt = 0;
-    while (cnt)
-    {
-
-        // Modify grid
-        grid_set_pixel(g, cnt % 23, cnt % 23);
-        // Update renderer (Only re-render changes)
-        f = renderer_update(g);
-        printf("Position (%i, %i)", cnt, cnt);
-        // Print rendering info
-        printf("Rendered frame %i", f->frames_rendered);
-
-        cnt++;
-    }
-    */
-    /*
-    grid_clear(g);
-
-
-    grid_draw_line(g, 23, 0, 0, 23);
-    grid_draw_line(g, 0, 0, 23, 23);
-
-    grid_render_loop(g);
-    grid_clear(g);
-
-
-    grid_draw_triangle(g, 2, 2, 23, 12, 10, 23);
-    grid_render_loop(g);
-    */
-
     return 0;
 }

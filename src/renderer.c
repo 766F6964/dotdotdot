@@ -44,6 +44,10 @@ void renderer_update(grid* p_grid)
 
     printf("Rendering frame %i\n", p_render_context->frames_rendered);
 
+
+    grid_print_buffer(p_grid, "Current: ");
+    grid_print_buffer(p_render_context->p_cached_grid, "Cached : ");
+
     // Iterate over grid and look for differences to cached_grid
     for (int i = 0; i < p_grid->buffer_size; i++)
     {
