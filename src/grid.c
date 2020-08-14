@@ -8,6 +8,7 @@
 #include "grid.h"
 #include "unicode.h"
 #include "constants.h"
+//#include <ncurses.h>
 
 
 grid *grid_new(int grid_width, int grid_height)
