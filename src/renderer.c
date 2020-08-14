@@ -80,7 +80,7 @@ void renderer_update(grid* p_grid)
     // This is a dirty hack, - ideally we want to render only the characters that changed
     // from the cached frame to the current frame, which is what the code above tried to attempt
     // However it does not yet work correctly, because overwriting characters at specific coordinates causes problems
-    clear();
+    erase();
 
     // Render current frame
     for (int i = 0; i < p_grid->buffer_size; ++i)
