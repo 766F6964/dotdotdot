@@ -14,6 +14,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "constants.h"
+#include <ncurses.h>
+#include <unistd.h>
+#include <locale.h>
 
 render_context* p_render_context;
 const int braille_offset = 0x2800;
@@ -22,6 +25,9 @@ wchar_t lookup_table[256] ={};
 
 
 void renderer_new(grid *p_grid) {
+
+    // Set locale for ncurses to process unicode correctly
+    setlocale(LC_ALL, "");
 
     // Generate braille lookup table
     grid_generate_lookup_table();
@@ -38,17 +44,20 @@ void renderer_new(grid *p_grid) {
     p_render_context->p_cached_grid = p_cached_grid;
     p_render_context->frames_rendered = 0;
 
+    // Initialize ncurses
+    initscr();
+    noecho();
+    curs_set(FALSE);
 }
 
 void renderer_update(grid* p_grid)
 {
-    // ToDo: Only render the characters that changed from current grid to cached grid
-    // ToDo: Get character coordinates from grid coordinates
+    // (!! Buggy !!) 
+    // Only render the characters that changed from current grid to cached grid
 
-    printf("Rendering frame %i\n", p_render_context->frames_rendered);
-
-    grid_print_buffer(p_grid, "Current: ");
-    grid_print_buffer(p_render_context->p_cached_grid, "Cached : ");
+    //printf("Rendering frame %i\n", p_render_context->frames_rendered);
+    //grid_print_buffer(p_grid, "Current: ");
+    //grid_print_buffer(p_render_context->p_cached_grid, "Cached : ");
 
     // Iterate over grid and look for differences to cached_grid
     for (int i = 0; i < p_grid->buffer_size; i++)
@@ -57,14 +66,23 @@ void renderer_update(grid* p_grid)
         if (p_grid->buffer[i] != p_render_context->p_cached_grid->buffer[i]) {
 
             // Compute row and column index of the character we need to re-render
-            int pos_x = i % (p_render_context->p_cached_grid->width / group_width);
-            int pos_y = i / (p_render_context->p_cached_grid->width / group_width);
-            printf("Change index %i [%i->%i] Rerendering coordinate (%i, %i).\n", i, p_render_context->p_cached_grid->buffer[i], p_grid->buffer[i], pos_x, pos_y);
+            //int pos_x = i % (p_render_context->p_cached_grid->width / group_width);
+            //int pos_y = i / (p_render_context->p_cached_grid->width / group_width);
+            
+            //move();
+            //mvdelch(pos_y, pos_x);
+
+            //printf("Change index %i [%i->%i] Rerendering coordinate (%i, %i).\n", i, p_render_context->p_cached_grid->buffer[i], p_grid->buffer[i], pos_x, pos_y);
         }
     }
 
+    // Clear all changes from the previous screen
+    // This is a dirty hack, - ideally we want to render only the characters that changed
+    // from the cached frame to the current frame, which is what the code above tried to attempt
+    // However it does not yet work correctly, because overwriting characters at specific coordinates causes problems
+    clear();
 
-
+    // Render current frame
     for (int i = 0; i < p_grid->buffer_size; ++i)
     {
         char uc[5];
@@ -73,20 +91,27 @@ void renderer_update(grid* p_grid)
 
         if (i % (p_grid->width / group_width) == 0 && i != 0)
         {
-            printf("\n");
+            printw("\n");
         }
-        printf(uc);
+        printw(uc);
     }
-    printf("\n");
+    printw("\n");
 
     // ToDo: Update p_cached_grid
     p_render_context->frames_rendered++;
+
+    // Sleep some milliseconds so that changes are visible to the human eye
+    napms(render_delay_ms);
+
+    // Refresh terminal to render changes
+    refresh();
 }
 
 void renderer_free()
 {
     free(p_render_context->p_cached_grid);
     free(p_render_context);
+    endwin();
 }
 
 void grid_generate_lookup_table()
