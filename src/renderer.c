@@ -106,6 +106,7 @@ void renderer_free()
     napms(2000);
 
     // Free all allocations and end ncurses window
+    free(p_render_context->p_cached_grid->buffer);
     free(p_render_context->p_cached_grid);
     free(p_render_context);
     endwin();
