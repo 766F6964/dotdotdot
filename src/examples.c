@@ -1,3 +1,4 @@
+#include <math.h>
 #include "grid.h"
 #include "renderer.h"
 
@@ -46,3 +47,38 @@ void example_build_block()
     renderer_free();
     grid_free(g);
 }
+
+
+#define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
+
+double calc_sine(int height, double x)
+{
+    return height + sin(degToRad(x+1)) * height;
+} 
+
+void example_sine_tracking()
+{
+    int width = 100;
+    int height = 40;
+
+    grid *g = grid_new(width, height);
+    renderer_new(g);
+
+    // Render the sine curve
+    int i = 0;
+    while (1) {
+
+        grid_clear(g);
+        int pos_x = width - 1;
+        int pos_y = (height + sin(i * 0.05) * height)/2;
+
+        grid_draw_line(g, 0, height / 2, pos_x, pos_y);
+        renderer_update(g);
+        
+        i++;
+    }
+
+    // Free allocations
+    renderer_free();
+    grid_free(g);
+} 

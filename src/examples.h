@@ -5,5 +5,6 @@
 
 void example_filling_bar();
 void example_build_block();
+void example_sine_tracking();
 
 #endif

@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <math.h>
 #include "examples.h"
+
+#define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
 
 int main()
 {  
-    //example_filling_bar();
-    example_build_block();
-    
+    example_sine_tracking();
     return 0;
 }
