@@ -5,7 +5,7 @@
 int main()
 {  
     //example_filling_bar();
-    example_sine_tracking();
+    example_build_block();
     
     return 0;
 }

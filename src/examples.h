@@ -4,6 +4,6 @@
 #include "grid.h"
 
 void example_filling_bar();
-void example_sine_tracking();
+void example_build_block();
 
 #endif
