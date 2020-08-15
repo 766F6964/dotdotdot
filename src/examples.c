@@ -1,6 +1,7 @@
 #include <math.h>
 #include "grid.h"
 #include "renderer.h"
+#include <stdio.h>
 
 void example_filling_bar()
 {
@@ -48,37 +49,45 @@ void example_build_block()
     grid_free(g);
 }
 
-
-#define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
+//#define degToRad(angleInDegrees) ((angleInDegrees)*M_PI / 180.0)
 
 double calc_sine(int height, double x)
 {
-    return height + sin(degToRad(x+1)) * height;
-} 
+    return height + sin((x + 1) * M_PI / 180.0f) * height;
+}
 
 void example_sine_tracking()
 {
-    int width = 100;
+    int width = 120;
     int height = 40;
 
     grid *g = grid_new(width, height);
     renderer_new(g);
 
-    // Render the sine curve
     int i = 0;
-    while (1) {
+    while (1)
+    {
 
         grid_clear(g);
-        int pos_x = width - 1;
-        int pos_y = (height + sin(i * 0.05) * height)/2;
 
+        // Draw line
+        int pos_x = width - 1;
+        int pos_y = (height + sin(i * 0.05) * height) / 2;
         grid_draw_line(g, 0, height / 2, pos_x, pos_y);
+
+        // Draw curve
+        for (int j = 0; j < width; j++)
+        {
+            int curve_coord = (height + sin(j * 0.05) * height) / 2;
+            grid_set_pixel(g, j, curve_coord);
+        }
+
         renderer_update(g);
-        
+
         i++;
     }
 
     // Free allocations
     renderer_free();
     grid_free(g);
-} 
+}
