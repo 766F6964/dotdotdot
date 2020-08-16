@@ -60,71 +60,32 @@ double calc_sine_curve(double a, double b, double c, double d, double x)
 
 void example_sine_tracking()
 {
-    int width = 120;
+    int width = 124;
     int height = 40;
 
     grid *g = grid_new(width, height);
     renderer_new(g);
 
+    double shift = 0;
 
-
-
-    // Draw curve
-    int i = 0;
-    double c = 0;
-    double a = 19;
-    double b = 0.05;
-
-    double d = 19;
     while (1)
     {
-        
-        grid_clear(g);
-        
-        // Draw line
-        int pos_x = width - 1;
-        int pos_y = (height + sin(i * 0.03) * height) / 2;
-        grid_draw_line(g, 0, height / 2, pos_x, pos_y);
-
-
-        c += 0.03;
-
-        for (int j = 0; j < width; j++)
-        {
-
-            int y = (int)calc_sine_curve(a, b, c, d, j);
-            //int curve_coord = (height + sin(j * 0.05) * height) / 2;
-
-            grid_set_pixel(g, j, y);
-        } 
-        renderer_update(g);
-        i++;
-    }
-    /*
-    int i = 0;
-    while (1)
-    {
-
         grid_clear(g);
 
         // Draw line
-        //int pos_x = width - 1;
-        //int pos_y = calc_sine(height, i);
-        //grid_draw_line(g, 0, height / 2, pos_x, pos_y);
+        grid_draw_line(g, 0, height / 2, width - 1, (height + sin(shift) * height) / 2);
 
         // Draw curve
         for (int j = 0; j < width; j++)
-        {   
-
-            int curve_coord = (height + sin(j * 0.05) * height) / 2;
-            grid_set_pixel(g, j, curve_coord);
+        {
+            grid_set_pixel(g, j, (int)calc_sine_curve(height / 2, 0.05, shift, height / 2, j));
         }
 
-        renderer_update(g);
+        // Move curve
+        shift += 0.05;
 
-        i++;
+        renderer_update(g);
     }
-    */
 
     // Free allocations
     renderer_free();
