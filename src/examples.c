@@ -49,15 +49,6 @@ void example_build_block()
     grid_free(g);
 }
 
-// a = stretch y
-// b = stretch x
-// c = move x
-// d = move y
-double calc_sine_curve(double a, double b, double c, double d, double x)
-{
-    return a * sin(b * x + c) + d;
-}
-
 void example_sine_tracking()
 {
     int width = 124;
@@ -78,7 +69,7 @@ void example_sine_tracking()
         // Draw curve
         for (int j = 0; j < width; j++)
         {
-            grid_set_pixel(g, j, (int)calc_sine_curve(height / 2, 0.05, shift, height / 2, j));
+            grid_set_pixel(g, j, (height / 2 * sin(0.05 * j + shift) + height / 2 ));
         }
 
         // Move curve
