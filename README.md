@@ -9,7 +9,7 @@ It is not limited to rendering a single image, but also allows for animations.
 - Very easy usage by accessing the canvas with coordinates
 
 ## Examples
-An example of what can be done with this library:
+An example that shows what can be done with this library:
 
 ![](https://i.imgur.com/bS5iAUP.gif)
 
