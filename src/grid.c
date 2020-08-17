@@ -8,7 +8,6 @@
 #include "grid.h"
 #include "unicode.h"
 #include "constants.h"
-//#include <ncurses.h>
 
 
 grid *grid_new(int grid_width, int grid_height)
@@ -55,39 +54,6 @@ void grid_print_buffer(grid *g, char* tag) {
         printf("0x%02x%s", g->buffer[i], i == g->buffer_size - 1 ? "\n" : ",");
     }
 }
-/*
-void grid_render(grid *g)
-{
-    for (int i = 0; i < g->buffer_size; ++i)
-    {
-        char uc[5];
-        int braille = lookup_table[g->buffer[i]];
-        int_to_unicode_char(braille, uc);
-
-        if (i % (g->width / group_width) == 0 && i != 0)
-        {
-            printf("\n");
-        }
-        printf(uc);
-    }
-    printf("\n");
-}
-
-void grid_render_loop(grid *g)
-{
-    //int fps_cap = 30;
-
-    struct timespec start, end;
-
-    clock_gettime(CLOCK_MONOTONIC_RAW, &start);
-    grid_render(g);
-    clock_gettime(CLOCK_MONOTONIC_RAW, &end);
-
-    unsigned long delta = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_nsec - start.tv_nsec) / 1000;
-
-    printf("Rendertime: %lu µs\n", delta);
-}
-*/
 
 void grid_modify_pixel(grid *g, int x, int y, int value)
 {

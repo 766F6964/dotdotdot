@@ -1,12 +1,3 @@
-// Explanation of rendering process:
-//
-// 1) Render is initialized with grid ptr
-// 2) Renderer needs to copy that grid and store it as grid_cached
-// 3) When renderer update is called, the grid passed as parameter is the current one
-// 3.1) If grid_cached != null -> render difference
-// 3.2) If grid_cached == null -> render grid normally and then set cached grid to the grid that was just rendered
-// 4) After rendering increase frame rendered counter
-
 #include "grid.h"
 #include "unicode.h"
 #include "renderer.h"
@@ -53,9 +44,8 @@ void renderer_new(grid *p_grid) {
 void renderer_update(grid* p_grid)
 {
     // Notes:
-    // Should only render the characters that changed from current grid buffer to cached 
-    // grid buffer for performance. While it does work (kinda), it still seems pretty laggy/stutters.
-
+    // Should only render the characters that changed from current grid buffer to the cached one
+ 
     // Iterate over grid and look for differences to cached_grid
     for (int i = 0; i < p_grid->buffer_size; i++)
     {

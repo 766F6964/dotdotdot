@@ -85,8 +85,8 @@ void example_sine_tracking()
 
 void example_spiral_effect()
 {
-    int width = 40;
-    int height = 24;
+    int width = 60;
+    int height = 32;
 
     grid *g = grid_new(width, height);
     renderer_new(g);
