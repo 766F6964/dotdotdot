@@ -69,13 +69,57 @@ void example_sine_tracking()
         // Draw curve
         for (int j = 0; j < width; j++)
         {
-            grid_set_pixel(g, j, (height / 2 * sin(0.05 * j + shift) + height / 2 ));
+            grid_set_pixel(g, j, (height / 2 * sin(0.05 * j + shift) + height / 2));
         }
 
         // Move curve
         shift += 0.05;
 
         renderer_update(g);
+    }
+
+    // Free allocations
+    renderer_free();
+    grid_free(g);
+}
+
+void example_spiral_effect()
+{
+    int width = 40;
+    int height = 24;
+
+    grid *g = grid_new(width, height);
+    renderer_new(g);
+
+    // Start with an empty grid
+    grid_clear(g);
+
+    int m = width, n = height;
+    int sr = 0, sc = 0, er = m - 1, ec = n - 1;
+    while (sr <= er && sc <= ec)
+    {
+        for (int i = sc; i <= ec; ++i)
+        {
+            grid_set_pixel(g, sr, i);
+            renderer_update(g);
+        }
+        for (int i = sr + 1; i <= er; ++i)
+        {
+            grid_set_pixel(g, i, ec);
+            renderer_update(g);
+        }
+        for (int i = ec - 1; sr != er && i >= sc; --i)
+        {
+            grid_set_pixel(g, er, i);
+            renderer_update(g);
+        }
+        for (int i = er - 1; sc != ec && i > sr; --i)
+        {
+            grid_set_pixel(g, i, sc);
+            renderer_update(g);
+        }
+        sr++, sc++;
+        er--, ec--;
     }
 
     // Free allocations
