@@ -1,7 +1,11 @@
 # DotDotDot
 ## Overview
 DotDotDot is a performant library that uses braille characters to draw to the terminal.
-It is not limited to rendering a single image, but also allows for animations.
+It is not limited to rendering a single image, but also allows for smooth animations.
+
+**Note:** DotDotDot is developed for linux, and probably won't work on other operating systems.
+
+**Note2:** Make sure your terminal uses a font that supports braille unicode characters!
 
 ## Features
 - Comes with a rendering engine that supports animations
@@ -48,6 +52,12 @@ void example_sine_tracking()
     grid_free(g);
 }
 ```
+
+## Roadmap
+- Improve rendering performance
+- Improve API to provide access to more shapes/structures such as:
+    - Circles
+    - Graph/coordinate system
 
 ## References
 The project was heavily inspired by the popular ![drawille library](https://github.com/asciimoo/drawille).
