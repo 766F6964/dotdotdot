@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <time.h>
-
+#include <string.h>
 #include "grid.h"
 #include "unicode.h"
 #include "constants.h"
@@ -12,7 +12,7 @@
 
 grid *grid_new(int grid_width, int grid_height)
 {
-    if ((grid_width % 2 != 0) || (grid_height % 4 != 0))
+    if ((grid_width % group_width != 0) || (grid_height % group_height != 0))
         return NULL;
 
     grid *p_grid = calloc(1, sizeof(*p_grid));
@@ -33,10 +33,7 @@ void grid_free(grid *p_grid)
 
 void grid_clear(grid *g)
 {
-    for (int i = 0; i < g->buffer_size; ++i)
-    {
-        g->buffer[i] = 0x00;
-    }
+    memset(g->buffer, 0x00, sizeof(*g->buffer) * g->buffer_size);
 }
 
 void grid_fill(grid *g)

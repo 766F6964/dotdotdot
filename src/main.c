@@ -5,8 +5,8 @@
 
 int main()
 {  
-    //example_sine_tracking();
+    example_sine_tracking();
     //example_build_block();
-    example_spiral_effect();
+    //example_spiral_effect();
     return 0;
 }
