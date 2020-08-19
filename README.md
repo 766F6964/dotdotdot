@@ -58,6 +58,8 @@ void example_sine_tracking()
 - Improve API to provide access to more shapes/structures such as:
     - Circles
     - Graph/coordinate system
+- Framepacing measurement/correction for animations
+- A statusbar that can optionally be enabled to show debug information such as fps, character rerender count etc
 
 ## References
 The project was heavily inspired by the popular ![drawille library](https://github.com/asciimoo/drawille).
