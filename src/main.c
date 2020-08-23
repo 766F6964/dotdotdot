@@ -5,6 +5,7 @@
 
 int main()
 {  
+    //example_fill_clear();
     example_sine_tracking();
     //example_build_block();
     //example_spiral_effect();

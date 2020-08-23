@@ -1,12 +1,14 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <stdint.h>
+
 typedef struct
 {
     int width;
     int height;
     int buffer_size;
-    int *buffer;
+    uint8_t *buffer;
 } grid;
 
 grid *grid_new(int grid_width, int grid_height);

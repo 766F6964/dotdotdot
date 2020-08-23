@@ -20,8 +20,8 @@ grid *grid_new(int grid_width, int grid_height)
     p_grid->width = grid_width;
     p_grid->height = grid_height;
     p_grid->buffer_size = grid_width / group_width * grid_height / group_height;
-    p_grid->buffer = calloc(p_grid->buffer_size, sizeof(int));
-
+    p_grid->buffer = calloc(p_grid->buffer_size, sizeof(p_grid->buffer));
+    
     return p_grid;
 }
 
@@ -38,10 +38,7 @@ void grid_clear(grid *g)
 
 void grid_fill(grid *g)
 {
-    for (int i = 0; i < g->buffer_size; ++i)
-    {
-        g->buffer[i] = 0xFF;
-    }
+    memset(g->buffer, 0xFF, sizeof(*g->buffer) * g->buffer_size);
 }
 
 void grid_print_buffer(grid *g, char* tag) {
