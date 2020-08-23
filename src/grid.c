@@ -45,7 +45,7 @@ void grid_fill(grid *g)
 }
 
 void grid_print_buffer(grid *g, char* tag) {
-    printf(tag);
+    printf("%s", tag);
     for (int i = 0; i < g->buffer_size; i++)
     {
         printf("0x%02x%s", g->buffer[i], i == g->buffer_size - 1 ? "\n" : ",");
