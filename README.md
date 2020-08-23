@@ -60,6 +60,7 @@ void example_sine_tracking()
     - Graph/coordinate system
 - Framepacing measurement/correction for animations
 - A statusbar that can optionally be enabled to show debug information such as fps, character rerender count etc
+- Add unit tests
 
 ## References
 The project was heavily inspired by the popular ![drawille library](https://github.com/asciimoo/drawille).

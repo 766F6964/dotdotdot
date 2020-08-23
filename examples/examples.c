@@ -1,6 +1,6 @@
 #include <math.h>
-#include "grid.h"
-#include "renderer.h"
+#include "../src/grid.h"
+#include "../src/renderer.h"
 #include <stdio.h>
 
 void example_filling_bar()
