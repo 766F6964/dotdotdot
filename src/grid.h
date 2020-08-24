@@ -21,5 +21,6 @@ void grid_set_pixel(grid *g, int x, int y);
 void grid_unset_pixel(grid *g, int x, int y);
 void grid_draw_line(grid *g, int x1, int y1, int x2, int y2);
 void grid_draw_triangle(grid *g, int x1, int y1, int x2, int y2, int x3, int y3);
+void grid_draw_border(grid *g, int thickness);
 
 #endif

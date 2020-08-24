@@ -5,8 +5,8 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/src/dots",
-        "cwd": "${workspaceFolder}/src/",
+        "program": "${workspaceFolder}/examples/dots",
+        "cwd": "${workspaceFolder}/examples/",
         "MIMode": "gdb",
         "setupCommands": [
             {

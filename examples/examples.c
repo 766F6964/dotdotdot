@@ -126,3 +126,21 @@ void example_spiral_effect()
     renderer_free();
     grid_free(g);
 }
+
+void example_draw_border()
+{
+    int width = 100;
+    int height = 40;
+    int border_thickness = 5;
+
+    grid *g = grid_new(width, height);
+    renderer_new(g);
+
+    // Draw border around the grid
+    grid_draw_border(g, border_thickness);
+    renderer_update(g);
+
+    // Free allocations
+    renderer_free();
+    grid_free(g);
+}

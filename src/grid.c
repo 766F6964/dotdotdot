@@ -9,7 +9,6 @@
 #include "unicode.h"
 #include "constants.h"
 
-
 grid *grid_new(int grid_width, int grid_height)
 {
     if ((grid_width % group_width != 0) || (grid_height % group_height != 0))
@@ -21,7 +20,7 @@ grid *grid_new(int grid_width, int grid_height)
     p_grid->height = grid_height;
     p_grid->buffer_size = grid_width / group_width * grid_height / group_height;
     p_grid->buffer = calloc(p_grid->buffer_size, sizeof(p_grid->buffer));
-    
+
     return p_grid;
 }
 
@@ -41,7 +40,8 @@ void grid_fill(grid *g)
     memset(g->buffer, 0xFF, sizeof(*g->buffer) * g->buffer_size);
 }
 
-void grid_print_buffer(grid *g, char* tag) {
+void grid_print_buffer(grid *g, char *tag)
+{
     printf("%s", tag);
     for (int i = 0; i < g->buffer_size; i++)
     {
@@ -104,4 +104,43 @@ void grid_draw_triangle(grid *g, int x1, int y1, int x2, int y2, int x3, int y3)
     grid_draw_line(g, x1, y1, x2, y2);
     grid_draw_line(g, x2, y2, x3, y3);
     grid_draw_line(g, x3, y3, x1, y1);
+}
+
+void grid_draw_border(grid *g, int thickness)
+{
+    // Make sure border thickness is at least 1
+    if (thickness < 1)
+    {
+        return;
+    }
+
+    // Make sure thickness is less than half the width or height of the grid
+    if (thickness >= g->width / 2 || thickness >= g->height / 2)
+    {
+        return;
+    }
+
+    // Draw borders
+    for (int row = 0; row < g->height; row++)
+    {
+        // Draw top and bottom border parts
+        if (row < thickness || (g->height - thickness) <= row)
+        {
+            for (int line = 0; line < g->width; line++)
+            {
+                grid_set_pixel(g, line, row);
+            }
+        }
+        else
+        {
+            // Draw left and right border parts
+            for (int col = 0; col < g->width; col++)
+            {
+                if (col < thickness || col >= (g->width - thickness))
+                {
+                    grid_set_pixel(g, col, row);
+                }
+            }
+        }
+    }
 }
