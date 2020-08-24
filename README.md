@@ -1,5 +1,8 @@
 # DotDotDot
 ## Overview
+
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+
 DotDotDot is a performant library that uses braille characters to draw to the terminal in a user-defined grind.
 It is not limited to rendering a single image, but also allows for smooth animations.
 DotDotDot is developed for linux, but should also work on MacOSX (not tested). Windows is not supported.
