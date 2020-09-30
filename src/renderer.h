@@ -9,6 +9,7 @@ typedef struct {
 } render_context;
 
 void renderer_new(grid* p_grid);
+void renderer_raw_dump(grid* p_grid);
 void renderer_update(grid* p_grid);
 void renderer_free();
 void grid_generate_lookup_table();

@@ -17,11 +17,11 @@ wchar_t lookup_table[256] ={};
 
 void renderer_new(grid *p_grid) {
 
-    // Set locale for ncurses to process unicode correctly
-    setlocale(LC_ALL, "");
-
     // Generate braille lookup table
     grid_generate_lookup_table();
+
+    // Set locale for ncurses to process unicode correctly
+    setlocale(LC_ALL, "");
 
     // Create copy of initial grid for caching, but zero out buffer
     grid *p_cached_grid = calloc(1, sizeof(*p_grid));
@@ -39,6 +39,34 @@ void renderer_new(grid *p_grid) {
     initscr();
     noecho();
     curs_set(0);
+}
+
+void renderer_raw_dump(grid* p_grid)
+{
+    for (int i = 0; i < p_grid->buffer_size; i++)
+    {
+	// Obtain correct braille character
+	char uc[5];
+	int braille = lookup_table[p_grid->buffer[i]];
+
+	if(BRAILLE_BLANK == braille) {
+	    uc[0] = ' ';
+	    uc[1] = '\0';
+	} else {
+	    // int to UTF8 is more accurate
+	    int_to_unicode_char(braille, uc);
+	}
+
+	// UTF8 is safe to just print (no internal '\0's)
+	printf("%s", uc);
+
+	// Linebreak if we reached the right end of the grid
+	if (i % (p_grid->width / group_width) == 0 && i != 0)
+	{
+	    printf("\n");
+	}
+    }
+    printf("\n");
 }
 
 void renderer_update(grid* p_grid)
