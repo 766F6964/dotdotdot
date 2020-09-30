@@ -1,0 +1,77 @@
+grid.c functions
+
+   grid_new() initialize a grid
+   grid_free() free an initialized grid
+   grid_clear() set a grid to all white
+   grid_fill() set a grid to all black
+   grid_print_buffer() debugging aid to show grid contents as hex
+   grid_modify_pixel() raw set/unset function
+   grid_set_pixel() set a pixel black
+   grid_unset_pixel() set a pixel white
+   grid_draw_line() draw line between two points
+   grid_draw_triange() draw three lines between three points
+
+renderer.c functions:
+
+   renderer_new() ncurses init
+   renderer_raw_dump() braille output without curses
+   renderer_update() update of ncurses screen with changes (including full screen)
+   renderer_free() free cache used for finding changes
+   grid_generate_lookup_table() create lookup table used for speed (done by renderer_new())
+
+unicode.c functions:
+
+   int_to_unicode_char() code point to UTF-8 encoding
+
+
+
+Two expected code patterns for renderer.c functions:
+
+    ncurses output (eg, live animation):
+       renderer_new() renderer_update() [ renderer_update() ... ] renderer_free()
+
+    plain UTF8 text output (eg, single frame to stdout):
+       grid_generate_lookup_table() renderer_raw_dump()
+
+
+General expected code pattern:
+
+    grid_new()
+    // ncurses
+    renderer_new()
+    // OR plain text init
+    grid_generate_lookup_table()
+
+    // grid_fill() OR grid_clear()
+
+    // initial draw
+    renderer_update()
+
+    while( ) {
+       grid_set_pixel()
+       // and/or
+       grid_unset_pixel()
+       // and/or
+       grid_modify_pixel()
+       // and/or
+       grid_draw_line()
+
+       // if ncurses
+       if( enought ) {
+	  renderer_update()
+       }
+    }
+    // if not ncurses
+    renderer_raw_dump()
+
+    // only if ncurses
+    renderer_free();
+
+    grid_free(g);
+
+
+Sizes
+
+The grid is the specified in pixel sizes; the characters are 2 pixels wide
+and 4 pixels tall. If the grid does not exactly mesh with that, grid_new()
+will fail. So width must be even, and height must be a multiple of 4.
