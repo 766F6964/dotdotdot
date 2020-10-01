@@ -3,7 +3,7 @@
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 
-DotDotDot is a performant library that uses braille characters to draw to the terminal in a user-defined grind.
+DotDotDot is a performant library that uses braille characters to draw to the terminal in a user-defined grid.
 It is not limited to rendering a single image, but also allows for smooth animations.
 DotDotDot is developed for linux, but should also work on MacOSX (not tested). Windows is not supported.
 
@@ -62,6 +62,7 @@ void example_sine_tracking()
 ## Dependencies
 - `libm` for mathematical functions
 - `ncurses` needed by the renderer
+- `pbm` for the `pbmtodots` tool
 
 ## Roadmap
 - Improve rendering performance
@@ -70,5 +71,8 @@ void example_sine_tracking()
 - A statusbar that can display additional information such as frames per second etc.
 - Unit tests
 
+## Authorship
+- 766F6964 on Github wrote most of the code
+- Eli the Bearded added `pbmtodots`
 ## References
 The project was heavily inspired by the popular ![drawille library](https://github.com/asciimoo/drawille).
