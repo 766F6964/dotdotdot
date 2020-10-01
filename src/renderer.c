@@ -17,11 +17,11 @@ wchar_t lookup_table[256] ={};
 
 void renderer_new(grid *p_grid) {
 
-    // Generate braille lookup table
-    grid_generate_lookup_table();
-
     // Set locale for ncurses to process unicode correctly
     setlocale(LC_ALL, "");
+
+    // Generate braille lookup table
+    grid_generate_lookup_table();
 
     // Create copy of initial grid for caching, but zero out buffer
     grid *p_cached_grid = calloc(1, sizeof(*p_grid));
