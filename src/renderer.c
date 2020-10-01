@@ -41,7 +41,7 @@ void renderer_new(grid *p_grid) {
     curs_set(0);
 }
 
-void renderer_raw_dump(grid* p_grid)
+void renderer_raw_dump(grid* p_grid, int use_spaces)
 {
     for (int i = 0; i < p_grid->buffer_size; i++)
     {
@@ -49,7 +49,7 @@ void renderer_raw_dump(grid* p_grid)
 	char uc[5];
 	int braille = lookup_table[p_grid->buffer[i]];
 
-	if(BRAILLE_BLANK == braille) {
+	if(use_spaces && (braille_blank == braille)) {
 	    uc[0] = ' ';
 	    uc[1] = '\0';
 	} else {
@@ -57,14 +57,15 @@ void renderer_raw_dump(grid* p_grid)
 	    int_to_unicode_char(braille, uc);
 	}
 
-	// UTF8 is safe to just print (no internal '\0's)
-	printf("%s", uc);
-
 	// Linebreak if we reached the right end of the grid
-	if (i % (p_grid->width / group_width) == 0 && i != 0)
+	if ((i % (p_grid->width / group_width)) == 0 && i != 0)
 	{
 	    printf("\n");
 	}
+
+	// UTF8 is safe to just print (no internal '\0's)
+	printf("%s", uc);
+
     }
     printf("\n");
 }
