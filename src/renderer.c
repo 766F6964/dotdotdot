@@ -43,9 +43,7 @@ void renderer_new(grid *p_grid) {
 
 void renderer_update(grid* p_grid)
 {
-    // Notes:
-    // Should only render the characters that changed from current grid buffer to the cached one
- 
+
     // Iterate over grid and look for differences to cached_grid
     for (int i = 0; i < p_grid->buffer_size; i++)
     {
@@ -55,30 +53,19 @@ void renderer_update(grid* p_grid)
             // Compute row and column index of the character we need to re-render
             int pos_x = i % (p_render_context->p_cached_grid->width / group_width);
             int pos_y = i / (p_render_context->p_cached_grid->width / group_width);           
-            
+
             // Obtain correct braille character
             char uc[5];
             int braille = lookup_table[p_grid->buffer[i]];
             int_to_unicode_char(braille, uc);
 
-            // Linebreak if we reached the right end of the grid
-            if (i % (p_grid->width / group_width) == 0 && i != 0)
-            {
-                printw("\n");
-            }
-
             // Render the braille character at the position that changed
             mvprintw(pos_y, pos_x, uc);
-
-            //printw("Change index %i [%i->%i] Rerendering coordinate (%i, %i).\n", i, p_render_context->p_cached_grid->buffer[i], p_grid->buffer[i], pos_x, pos_y);
         }
     }
 
     // ToDo: Update p_cached_grid
     p_render_context->frames_rendered++;
-
-    //grid_print_buffer(p_render_context->p_cached_grid, "cached: ");
-    //grid_print_buffer(p_grid, "current: ");
 
     // Update cached buffer with current one
     memcpy(p_render_context->p_cached_grid->buffer, p_grid->buffer, sizeof(int) * p_grid->buffer_size);
