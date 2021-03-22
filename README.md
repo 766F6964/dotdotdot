@@ -70,5 +70,23 @@ void example_sine_tracking()
 - A statusbar that can display additional information such as frames per second etc.
 - Unit tests
 
+## Troubleshooting
+The most common problem when working with dotdotdot is that the braille characters are not correctly displayed in the terminal.
+There are three possible causes for this:
+
+**Fonts:**
+Make sure you have a font installed that supports braille characters.
+Some fonts that should work are: Terminus, Fixed and DejaVuSansMono. Some more informatin can be found here: http://www.wazu.jp/gallery/Fonts_Braille.html
+Make sure the font is set as the font for your terminal.
+
+**Terminal:**
+Not all terminals appear to work correctly when it comes to displaying braille characters.
+Terminals that are confirmed working are: st, rxvt-unicode.
+Terminals that are known to cause issues (printing gibberish), are: konsole, xterm.
+
+**Locales:**
+Make sure your locales are setup correctly on your system. There have been problems when those were not setup correctly.
+If that is the case, you can also try changing the `setlocale(LC_ALL, "")` from a blank one to any UTF-8 one, such `en_US.UTF-8`.
+
 ## References
 The project was heavily inspired by the popular ![drawille library](https://github.com/asciimoo/drawille).
