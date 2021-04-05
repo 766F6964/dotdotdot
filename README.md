@@ -76,13 +76,14 @@ There are three possible causes for this:
 
 **Fonts:**
 Make sure you have a font installed that supports braille characters.
-Some fonts that should work are: Terminus, Fixed and DejaVuSansMono. Some more informatin can be found here: http://www.wazu.jp/gallery/Fonts_Braille.html
-Make sure the font is set as the font for your terminal.
+You can either install a font that has braille support, for example Terminus or DejaVuSansMono. 
+Alternatively, you can directly download a braille ttf file from here: http://www.wazu.jp/gallery/Fonts_Braille.html
+And then install it by following your linux distributions guidelines on how to install fonts.
 
 **Terminal:**
 Not all terminals appear to work correctly when it comes to displaying braille characters.
 Terminals that are confirmed working are: st, rxvt-unicode.
-Terminals that are known to cause issues (printing gibberish), are: konsole, xterm.
+Terminals that are known to cause issues (e.g. printing gibberish), are: konsole, xterm.
 
 **Locales:**
 Make sure your locales are setup correctly on your system. There have been problems when those were not setup correctly.
